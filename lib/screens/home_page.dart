@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../models/activites_data.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -27,7 +28,22 @@ class HomePage extends StatelessWidget {
         onPressed: () {},
         child: const Icon(Icons.add),
       ),
-      body: const Center(child: Text('Liste des activités à venir')),
+      body: ListView.builder(
+        padding: const EdgeInsets.all(12),
+        itemCount: activites.length,
+        itemBuilder: (context, index) {
+          final a = activites[index];
+          return Card(
+            margin: const EdgeInsets.symmetric(vertical: 6),
+            child: ListTile(
+              leading: Text(a.icone, style: const TextStyle(fontSize: 28)),
+              title: Text(a.titre,
+                  style: const TextStyle(fontWeight: FontWeight.bold)),
+              subtitle: Text(a.description),
+            ),
+          );
+        },
+      ),
     );
   }
 }
