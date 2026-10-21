@@ -10,22 +10,52 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(title: const Text('Ma Garderie')),
       drawer: Drawer(
         child: ListView(
-          children: const [
-            DrawerHeader(
+          children: [
+            const DrawerHeader(
               decoration: BoxDecoration(color: Colors.orange),
               child: Center(
                 child: Text('Ma Garderie',
                     style: TextStyle(color: Colors.white, fontSize: 24)),
               ),
             ),
-            ListTile(leading: Icon(Icons.home), title: Text('Accueil')),
-            ListTile(leading: Icon(Icons.toys), title: Text('Activités')),
-            ListTile(leading: Icon(Icons.info), title: Text('À propos')),
+            ListTile(
+              leading: const Icon(Icons.home),
+              title: const Text('Accueil'),
+              onTap: () => Navigator.pop(context),
+            ),
+            ListTile(
+              leading: const Icon(Icons.toys),
+              title: const Text('Activités'),
+              onTap: () {
+                Navigator.pop(context);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Section Activités')),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.info),
+              title: const Text('À propos'),
+              onTap: () {
+                Navigator.pop(context);
+                showDialog(
+                  context: context,
+                  builder: (_) => const AlertDialog(
+                    title: Text('À propos'),
+                    content: Text('Application Ma Garderie v1.0'),
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Nouvelle activité')),
+          );
+        },
         child: const Icon(Icons.add),
       ),
       body: ListView.builder(
@@ -40,6 +70,11 @@ class HomePage extends StatelessWidget {
               title: Text(a.titre,
                   style: const TextStyle(fontWeight: FontWeight.bold)),
               subtitle: Text(a.description),
+              onTap: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text(a.titre)),
+                );
+              },
             ),
           );
         },
